@@ -18,11 +18,11 @@ const FRAGMENT_MATCHER = / data-slate-fragment="([^\s]+)"/
  */
 
 function getTransferData(transfer) {
-  let fragment = transfer.getData(TYPES.FRAGMENT) || null
-  let node = transfer.getData(TYPES.NODE) || null
-  const html = transfer.getData('text/html') || null
-  const rich = transfer.getData('text/rtf') || null
-  const text = transfer.getData('text/plain') || null
+  let fragment = getFragment(transfer)
+  let node = getNode(transfer)
+  const html = getHtml(transfer)
+  const rich = getRichText(transfer)
+  const text = getText(transfer)
   let files
 
   // If there isn't a fragment, but there is HTML, check to see if the HTML is
@@ -78,6 +78,26 @@ function getTransferType(data) {
   if (data.html) return 'html'
   if (data.text) return 'text'
   return 'unknown'
+}
+
+function getFragment(transfer) {
+  return transfer.types && transfer.types.indexOf(TYPES.FRAGMENT) !== -1 ? transfer.getData(TYPES.FRAGMENT) || null : null
+}
+
+function getNode(transfer) {
+  return transfer.types && transfer.types.indexOf(TYPES.NODE) !== -1 ? transfer.getData(TYPES.NODE) || null : null
+}
+
+function getHtml(transfer) {
+  return transfer.types && transfer.types.length ? transfer.getData('text/html') || null : null
+}
+
+function getRichText(transfer) {
+  return transfer.types && transfer.types.length ? transfer.getData('text/rtf') || null : null
+}
+
+function getText(transfer) {
+  return transfer.types && transfer.types.length ? transfer.getData('text/plain') || null : transfer.getData("Text")
 }
 
 /**
