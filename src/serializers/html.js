@@ -92,7 +92,7 @@ class Html {
    */
 
   deserialize = (html, options = {}) => {
-    const $ = cheerio.load(html).root()
+    const $ = cheerio.load(html, { ignoreWhitespace: true }).root()
     const children = $.children().toArray()
     let nodes = this.deserializeElements(children)
 
