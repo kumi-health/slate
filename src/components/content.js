@@ -711,7 +711,7 @@ class Content extends React.Component {
     // can only be handled synchronously. (2017/06/23)
     if (IS_IE) {
       // Do not use `event.preventDefault()` as we need the native paste action.
-      getHtmlFromNativePaste(event.target, (html) => {
+      getHtmlFromNativePaste(this, (html) => {
         // If pasted HTML can be retreived, it is added to the `data` object,
         // setting the `type` to `html`.
         this.props.onPaste(event, html === undefined ? data : { ...data, html, type: 'html' })
