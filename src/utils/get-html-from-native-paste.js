@@ -29,7 +29,8 @@ function getHtmlFromNativePaste(component, callback) {
 
       callback(html)
     } else {
-      console.error('[Slate] paste failed, no html found, maybe use 20ms timeout loop?') // eslint-disable-line no-console
+      // Only plain text, no HTML.
+      callback()
     }
   })
 
@@ -56,7 +57,6 @@ function getHtmlFromNativePaste(component, callback) {
   //   }
   // }, 0)
   // -- old solution end
-
 }
 
 /**
