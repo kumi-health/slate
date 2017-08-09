@@ -198,6 +198,7 @@ class PasteHtml extends React.Component {
     return (
       <div className="editor">
         <Editor
+          placeholder="PLACEHOLDER"
           schema={schema}
           state={this.state.state}
           onPaste={this.onPaste}

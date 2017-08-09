@@ -1,6 +1,7 @@
 
 import React from 'react'
 import Types from 'prop-types'
+import { IS_IE } from '../constants/environment'
 
 /**
  * Placeholder.
@@ -107,7 +108,11 @@ class Placeholder extends React.Component {
     }
 
     return (
-      <span contentEditable={false} className={className} style={styles}>
+      // COMPAT: The HTML5 specs say: a `contenteditable=false` element within
+      // a `contenteditable=true` element is not editable. Wise guy IE 11 does
+      // it the other way round: only child elments with `contenteditable=true`
+      // are not editable. (2017/08/09)
+      <span contentEditable={IS_IE} className={className} style={styles}>
         {children}
       </span>
     )
