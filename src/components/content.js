@@ -15,7 +15,7 @@ import findDeepestNode from '../utils/find-deepest-node'
 import getPoint from '../utils/get-point'
 import getTransferData from '../utils/get-transfer-data'
 import getHtmlFromNativePaste from '../utils/get-html-from-native-paste'
-import { IS_FIREFOX, IS_MAC, IS_IE } from '../constants/environment'
+import { IS_FIREFOX, IS_MAC, IS_IE, IS_EDGE } from '../constants/environment'
 
 /**
  * Debug.
@@ -709,7 +709,7 @@ class Content extends React.Component {
     // COMPAT: In IE 11, only plain text can be retrieved from the event's
     // `clipboardData`. To get HTML, use the browser's native paste action which
     // can only be handled synchronously. (2017/06/23)
-    if (IS_IE) {
+    if (IS_IE || IS_EDGE) {
       // Do not use `event.preventDefault()` as we need the native paste action.
       getHtmlFromNativePaste(event.target, (html) => {
         // If pasted HTML can be retreived, it is added to the `data` object,

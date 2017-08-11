@@ -90,7 +90,7 @@ function getTransferType(data) {
  */
 
 function getType(transfer, type) {
-  if (!transfer.types || !transfer.types.length) {
+  if (!transfer.types || !transfer.types.length || !transfer.types.indexOf) {
     // COMPAT: In IE 11, there is no `types` field but `getData('Text')`
     // is supported`. (2017/06/23)
     return type === 'text/plain' ? transfer.getData('Text') || null : null
