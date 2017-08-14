@@ -79,3 +79,13 @@ export const IS_EDGE = BROWSER === 'edge'
 
 export const IS_MAC = OS === 'macos'
 export const IS_WINDOWS = OS === 'windows'
+
+
+if (IS_IE) {
+  console.log(`[Slate] detected IE on ${OS}`) // eslint-disable-line no-console
+} else if (IS_EDGE) {
+  console.log(`[Slate] detected EDGE on ${OS}`) // eslint-disable-line no-console
+} else {
+  console.log(`[Slate] thumbs up!`) // eslint-disable-line no-console
+}
+

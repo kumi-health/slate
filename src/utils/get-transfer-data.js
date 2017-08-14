@@ -1,6 +1,7 @@
 
 import Base64 from '../serializers/base-64'
 import TYPES from '../constants/types'
+import { IS_EDGE } from '../constants/environment'
 
 /**
  * Fragment matching regexp for HTML nodes.
@@ -90,13 +91,14 @@ function getTransferType(data) {
  */
 
 function getType(transfer, type) {
-  if (!transfer.types || !transfer.types.length || !transfer.types.indexOf) {
+  if (!transfer.types || !transfer.types.length) {
     // COMPAT: In IE 11, there is no `types` field but `getData('Text')`
     // is supported`. (2017/06/23)
     return type === 'text/plain' ? transfer.getData('Text') || null : null
   }
-
-  return transfer.types.indexOf(type) !== -1 ? transfer.getData(type) || null : null
+  // COMPAT: In EDGE, `transfer.types` doesn't support `indexOf` but `contains`
+  // is supported`. (2017/08/14)
+  return (IS_EDGE ? transfer.types.contains(type) : transfer.types.indexOf(type) !== -1) ? transfer.getData(type) || null : null
 }
 
 /**
