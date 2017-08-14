@@ -15,7 +15,7 @@ import findDeepestNode from '../utils/find-deepest-node'
 import getPoint from '../utils/get-point'
 import getTransferData from '../utils/get-transfer-data'
 import getHtmlFromNativePaste from '../utils/get-html-from-native-paste'
-import { IS_FIREFOX, IS_MAC, IS_IE } from '../constants/environment'
+import { IS_FIREFOX, IS_MAC, IS_IE, IS_EDGE } from '../constants/environment'
 
 /**
  * Debug.
@@ -718,6 +718,17 @@ class Content extends React.Component {
       })
     } else {
       event.preventDefault()
+
+      // COMPAT: In EDGE, the html content is prefixed with non-html stuff and contains
+      // much other stuff (css inline files etc.) we only want the part between
+      // `startFragment` and `endFragment`. (2017/08/14)
+      if (IS_EDGE && data.type === 'html') {
+        const match = data.html.match(/<!--StartFragment-->(.*)<!--EndFragment-->/)
+        if (match.length === 2) {
+          data.html = match[1]
+        }
+      }
+
       this.props.onPaste(event, data)
     }
   }
