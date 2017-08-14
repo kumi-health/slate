@@ -709,9 +709,9 @@ class Content extends React.Component {
     // COMPAT: In IE 11, only plain text can be retrieved from the event's
     // `clipboardData`. To get HTML, use the browser's native paste action which
     // can only be handled synchronously. (2017/06/23)
-    if (IS_IE) {
+    if (IS_IE || IS_EDGE) {
       // Do not use `event.preventDefault()` as we need the native paste action.
-      getHtmlFromNativePaste(event.target, (html) => {
+      getHtmlFromNativePaste(this, (html) => {
         // If pasted HTML can be retreived, it is added to the `data` object,
         // setting the `type` to `html`.
         this.props.onPaste(event, html === undefined ? data : { ...data, html, type: 'html' })
@@ -719,15 +719,15 @@ class Content extends React.Component {
     } else {
       event.preventDefault()
 
-      // COMPAT: In EDGE, the html content is prefixed with non-html stuff and contains
-      // much other stuff (css inline files etc.) we only want the part between
-      // `startFragment` and `endFragment`. (2017/08/14)
-      if (IS_EDGE && data.type === 'html') {
-        const match = data.html.match(/<!--StartFragment-->(.*)<!--EndFragment-->/)
-        if (match.length === 2) {
-          data.html = `<meta charset='utf-8'>${match[1]}`
-        }
-      }
+      // // COMPAT: In EDGE, the html content is prefixed with non-html stuff and contains
+      // // much other stuff (css inline files etc.) we only want the part between
+      // // `startFragment` and `endFragment`. (2017/08/14)
+      // if (IS_EDGE && data.type === 'htmls') {
+      //   const match = data.html.match(/<!--StartFragment-->(.*)<!--EndFragment-->/)
+      //   if (match.length === 2) {
+      //     data.html = `<meta charset='utf-8'>${match[1]}`
+      //   }
+      // }
 
       this.props.onPaste(event, data)
     }

@@ -14,41 +14,18 @@ import { findDOMNode } from 'react-dom'
 function getHtmlFromNativePaste(component, callback) {
   const el = findDOMNode(component)
 
-  const savedContent = document.createDocumentFragment()
+  // const savedContent = document.createDocumentFragment()
 
-  while (el.childNodes.length > 0) {
-    savedContent.appendChild(el.childNodes[0])
-  }
+  // while (el.childNodes.length > 0) {
+  //   savedContent.appendChild(el.childNodes[0])
+  // }
 
-  setTimeout(() => {
-    if (el.childElementCount > 0) {
-      const html = el.innerHTML
-
-      el.innerHTML = ''
-      el.appendChild(savedContent)
-
-      callback(html)
-    } else {
-      // Only plain text, no HTML.
-      callback()
-    }
-  }, 0)
-
-  // -- old solution start
-  // // Clone contentedible element, move out of screen and set focus.
-  // const clone = el.cloneNode()
-  // clone.setAttribute('class', '')
-  // clone.setAttribute('style', 'position: fixed; left: -9999px')
-  // el.parentNode.insertBefore(clone, el)
-  // clone.focus()
-
-  // // Clear call stack to let native paste behaviour occur on cloned element,
-  // // then get what was pasted from the DOM and remove cloned element.
   // setTimeout(() => {
-  //   if (clone.childElementCount > 0) {
-  //     // If the node contains any child nodes, that is the HTML content.
-  //     const html = clone.innerHTML
-  //     clone.parentNode.removeChild(clone)
+  //   if (el.childElementCount > 0) {
+  //     const html = el.innerHTML
+
+  //     el.innerHTML = ''
+  //     el.appendChild(savedContent)
 
   //     callback(html)
   //   } else {
@@ -56,6 +33,29 @@ function getHtmlFromNativePaste(component, callback) {
   //     callback()
   //   }
   // }, 0)
+
+  // -- old solution start
+  // Clone contentedible element, move out of screen and set focus.
+  const clone = el.cloneNode()
+  clone.setAttribute('class', '')
+  clone.setAttribute('style', 'position: fixed; left: -9999px')
+  el.parentNode.insertBefore(clone, el)
+  clone.focus()
+
+  // Clear call stack to let native paste behaviour occur on cloned element,
+  // then get what was pasted from the DOM and remove cloned element.
+  setTimeout(() => {
+    if (clone.childElementCount > 0) {
+      // If the node contains any child nodes, that is the HTML content.
+      const html = clone.innerHTML
+      clone.parentNode.removeChild(clone)
+
+      callback(html)
+    } else {
+      // Only plain text, no HTML.
+      callback()
+    }
+  }, 0)
   // -- old solution end
 }
 
