@@ -725,7 +725,7 @@ class Content extends React.Component {
       if (IS_EDGE && data.type === 'html') {
         const match = data.html.match(/<!--StartFragment-->(.*)<!--EndFragment-->/)
         if (match.length === 2) {
-          data.html = match[1]
+          data.html = `<meta charset='utf-8'>${match[1]}`
         }
       }
 
