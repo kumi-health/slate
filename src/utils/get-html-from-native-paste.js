@@ -37,7 +37,7 @@ function getHtmlFromNativePaste(component, callback) {
   // -- old solution start
   // Clone contentedible element, move out of screen and set focus.
   const clone = el.cloneNode()
-  clone.setAttribute('class', '')
+  clone.setAttribute('class', 'slate-editor-paste-clone')
   clone.setAttribute('style', 'position: fixed; left: -9999px')
   el.parentNode.insertBefore(clone, el)
   clone.focus()
@@ -48,11 +48,12 @@ function getHtmlFromNativePaste(component, callback) {
     if (clone.childElementCount > 0) {
       // If the node contains any child nodes, that is the HTML content.
       const html = clone.innerHTML
-      clone.parentNode.removeChild(clone)
 
+      clone.parentNode.removeChild(clone)
       callback(html)
     } else {
       // Only plain text, no HTML.
+      clone.parentNode.removeChild(clone)
       callback()
     }
   }, 0)
