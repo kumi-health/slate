@@ -195,6 +195,9 @@ class Node extends React.Component {
    */
 
   onDragStart = (e) => {
+    // DISABLE FOR NOW
+    return
+
     const { node } = this.props
     const encoded = Base64.serializeNode(node, { preserveKeys: true })
     const data = e.nativeEvent.dataTransfer

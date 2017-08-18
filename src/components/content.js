@@ -425,6 +425,9 @@ class Content extends React.Component {
    */
 
   onDragEnd = (event) => {
+    // DISABLE FOR NOW
+    return
+
     if (!this.isInEditor(event.target)) return
 
     this.tmp.isDragging = false
@@ -440,6 +443,9 @@ class Content extends React.Component {
    */
 
   onDragOver = (event) => {
+    // DISABLE FOR NOW
+    return
+
     if (!this.isInEditor(event.target)) return
 
     const { dataTransfer } = event.nativeEvent
@@ -464,6 +470,9 @@ class Content extends React.Component {
    */
 
   onDragStart = (event) => {
+    // DISABLE FOR NOW
+    return
+
     if (!this.isInEditor(event.target)) return
 
     this.tmp.isDragging = true
@@ -489,6 +498,9 @@ class Content extends React.Component {
    */
 
   onDrop = (event) => {
+    // DISABLE FOR NOW
+    return
+
     if (this.props.readOnly) return
     if (!this.isInEditor(event.target)) return
 
