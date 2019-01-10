@@ -44,13 +44,15 @@ const TEXT_RULE = {
 
   serialize(obj, children) {
     if (obj.kind == 'string') {
-      return children
-        .split('\n')
-        .reduce((array, text, i) => {
-          if (i != 0) array.push(<br />)
-          array.push(text)
-          return array
-        }, [])
+      // Do not convert line breaks to <br/> elements in text nodes
+      // return children
+      //   .split('\n')
+      //   .reduce((array, text, i) => {
+      //     if (i != 0) array.push(<br />)
+      //     array.push(text)
+      //     return array
+      //   }, [])
+      return [children]
     }
   }
 
