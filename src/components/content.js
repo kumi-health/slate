@@ -721,7 +721,9 @@ class Content extends React.Component {
     // COMPAT: In IE 11, only plain text can be retrieved from the event's
     // `clipboardData`. To get HTML, use the browser's native paste action which
     // can only be handled synchronously. (2017/06/23)
-    if (IS_IE || IS_EDGE) {
+
+    // Switch on for all browsers to always get HTML and always get it this same way (2019/01/10)
+    if (IS_IE || IS_EDGE || 1 === 1) {
       // Do not use `event.preventDefault()` as we need the native paste action.
       getHtmlFromNativePaste(this, (html) => {
         // If pasted HTML can be retreived, it is added to the `data` object,
