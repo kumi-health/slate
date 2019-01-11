@@ -722,8 +722,7 @@ class Content extends React.Component {
     // `clipboardData`. To get HTML, use the browser's native paste action which
     // can only be handled synchronously. (2017/06/23)
 
-    // Switch on for all browsers to always get HTML and always get it this same way (2019/01/10)
-    if (IS_IE || IS_EDGE || 1 === 1) {
+    if (IS_IE || IS_EDGE) {
       // Do not use `event.preventDefault()` as we need the native paste action.
       getHtmlFromNativePaste(this, (html) => {
         // If pasted HTML can be retreived, it is added to the `data` object,
@@ -856,13 +855,15 @@ class Content extends React.Component {
       // Prevent the default outline styles.
       outline: 'none',
       // Preserve adjacent whitespace and new lines.
-      whiteSpace: 'pre-wrap',
+      // Ignore new lines! (2019/01/11)
+      // whiteSpace: 'pre-wrap',
       // Allow words to break if they are too long.
       wordWrap: 'break-word',
       // COMPAT: In iOS, a formatting menu with bold, italic and underline
       // buttons is shown which causes our internal state to get out of sync in
       // weird ways. This hides that. (2016/06/21)
-      ...(readOnly ? {} : { WebkitUserModify: 'read-write-plaintext-only' }),
+      // Ignore new lines! THis prevents that (2019/01/11)
+      // ...(readOnly ? {} : { WebkitUserModify: 'read-write-plaintext-only' }),
       // Allow for passed-in styles to override anything.
       ...props.style,
     }

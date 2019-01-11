@@ -27,12 +27,13 @@ const String = new Record({
 const TEXT_RULE = {
 
   deserialize(el) {
-    if (el.tagName == 'br') {
-      return {
-        kind: 'text',
-        text: '\n'
-      }
-    }
+    // Do not convert line breaks to <br/> elements in text nodes
+    // if (el.tagName == 'br') {
+    //   return {
+    //     kind: 'text',
+    //     text: '\n'
+    //   }
+    // }
 
     if (el.type == 'text') {
       return {
